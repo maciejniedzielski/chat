@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  chat:
+    container_name: chat-prod
+    build:
+      context: .
+      dockerfile: apps/chat/Dockerfile.prod
+    ports:
+      - '80:80'

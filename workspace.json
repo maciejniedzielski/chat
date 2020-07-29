@@ -247,5 +247,5 @@
       "unitTestRunner": "jest"
     }
   },
-  "defaultProject": "api"
+  "defaultProject": "chat"
 }

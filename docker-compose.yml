@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  chat:
+    container_name: chat-dev
+    build:
+      context: .
+      dockerfile: apps/chat/Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '4200:4200'
