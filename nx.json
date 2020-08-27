@@ -18,7 +18,12 @@
       "runner": "@nrwl/nx-cloud",
       "options": {
         "accessToken": "YzY4N2Q0ZTktNzdlMS00YjJiLWI3NWQtODE4Y2E3ZTM3MWI3fHJlYWQtd3JpdGU=",
-        "cacheableOperations": ["build", "test", "lint", "e2e"],
+        "cacheableOperations": [
+          "build",
+          "test",
+          "lint",
+          "e2e"
+        ],
         "canTrackAnalytics": false,
         "showUsageWarnings": true
       }
@@ -33,7 +38,9 @@
     },
     "chat-e2e": {
       "tags": [],
-      "implicitDependencies": ["chat"]
+      "implicitDependencies": [
+        "chat"
+      ]
     }
   }
 }

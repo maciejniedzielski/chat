@@ -14,7 +14,14 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets",
+              {
+                "glob": "**/*.gql",
+                "input": "apps/api/src/app",
+                "output": "./src"
+              }
+            ]
           },
           "configurations": {
             "production": {
@@ -44,7 +51,10 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/api/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/api/**/*"
+            ]
           }
         },
         "test": {
@@ -77,8 +87,13 @@
             "polyfills": "apps/chat/src/polyfills.ts",
             "tsConfig": "apps/chat/tsconfig.app.json",
             "aot": true,
-            "assets": ["apps/chat/src/favicon.ico", "apps/chat/src/assets"],
-            "styles": ["apps/chat/src/styles.scss"],
+            "assets": [
+              "apps/chat/src/favicon.ico",
+              "apps/chat/src/assets"
+            ],
+            "styles": [
+              "apps/chat/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -130,13 +145,17 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@nrwl/linter:lint",
           "options": {
+            "linter": "eslint",
             "tsConfig": [
               "apps/chat/tsconfig.app.json",
               "apps/chat/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/chat/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/chat/**/*"
+            ]
           }
         },
         "test": {
@@ -169,10 +188,15 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": ["apps/chat-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/chat-e2e/**/*"]
+            "tsConfig": [
+              "apps/chat-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/chat-e2e/**/*"
+            ]
           }
         }
       }

@@ -1,13 +1,29 @@
 version: '3.8'
 
 services:
-  chat:
-    container_name: chat-dev
-    build:
-      context: .
-      dockerfile: apps/chat/Dockerfile
-    volumes:
-      - '.:/app'
-      - '/app/node_modules'
+  prisma:
+    image: prismagraphql/prisma:1.34
+    restart: always
     ports:
-      - '4200:4200'
+      - '4466:4466'
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        managementApiSecret: secret123
+        databases:
+          default:
+            connector: mongo
+            uri: mongodb://root:root@mongo
+
+  mongo-db:
+    image: mongo:4.2.9
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo:/var/lib/mongo
+volumes:
+  mongo: ~
