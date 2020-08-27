@@ -14,8 +14,7 @@ services:
           default:
             connector: mongo
             uri: mongodb://root:root@mongo
-
-  mongo-db:
+  mongo:
     image: mongo:4.2.9
     restart: always
     environment:
