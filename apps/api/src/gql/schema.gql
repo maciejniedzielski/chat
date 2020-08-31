@@ -1,7 +1,13 @@
+# Root types
 type Query {
   users: [User!]
 }
 
+type Mutation {
+  createUser(name: String!): User!
+}
+
+# Types
 type User {
   id: ID!
   name: String!

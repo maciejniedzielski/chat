@@ -1,19 +1,13 @@
 import { ApolloServer, gql } from 'apollo-server';
 import { readFileSync } from 'fs';
-import { prisma } from './generated/prisma-client';
+import { resolvers } from './resolvers';
 
 const typeDefs = gql`
   ${readFileSync(__dirname.concat('/src/schema.gql'), 'utf8')}
 `;
 
-const resolvers = {
-  Query: {
-    users: async () => await prisma.users(),
-  },
-};
-
 const server = new ApolloServer({ typeDefs, resolvers });
 
 server.listen().then(({ url }) => {
-  console.log(`[🚀]  Server ready at ${url}`);
+  console.log(`[🚀] Server started on port ${url}`);
 });
