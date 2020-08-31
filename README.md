@@ -1,4 +1,5 @@
 # Chat
+
 This project was generated using [Nx](https://nx.dev).
 
 ## Adding capabilities to your workspace
@@ -41,6 +42,8 @@ Run `nx g @nrwl/react:lib my-lib` to generate a library.
 Libraries are sharable across libraries and applications. They can be imported from `@chat/mylib`.
 
 ## Development server
+
+Run `docker-compose up` to start docker containers (Prisma, MongoDB)
 
 Run `npm run start` to start both API and client app.
 
