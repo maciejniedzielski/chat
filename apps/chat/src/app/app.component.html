@@ -1,0 +1,14 @@
+<ng-container *ngLet="isMobile$ | async as isMobile">
+  <mat-toolbar>
+    <button *ngIf="isMobile" mat-icon-button aria-label="menu" class="menu-button">
+      <mat-icon (click)="drawer.toggle()">menu</mat-icon>
+    </button>
+    <span>Chat</span>
+  </mat-toolbar>
+
+  <mat-drawer-container [hasBackdrop]="false" class="container">
+    <mat-drawer #drawer [mode]="isMobile ? 'push' : 'side'" [opened]="!isMobile" class="sidebar">
+    </mat-drawer>
+    <mat-drawer-content></mat-drawer-content>
+  </mat-drawer-container>
+</ng-container>
