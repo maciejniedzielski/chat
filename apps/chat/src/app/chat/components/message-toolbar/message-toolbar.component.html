@@ -1,0 +1,16 @@
+<mat-card class="chat-actions">
+  <mat-form-field class="message">
+    <textarea
+      #message
+      matInput
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="6"
+      placeholder="Message"
+    ></textarea>
+  </mat-form-field>
+  <button *ngIf="message.value" matSuffix mat-fab color="primary">
+    <mat-icon>send</mat-icon>
+  </button>
+</mat-card>

@@ -47,10 +47,7 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": [
-              "apps/api/tsconfig.app.json",
-              "apps/api/tsconfig.spec.json"
-            ],
+            "tsConfig": ["apps/api/tsconfig.app.json", "apps/api/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!apps/api/**/*"]
           }
         },
@@ -73,7 +70,7 @@
       },
       "root": "apps/chat",
       "sourceRoot": "apps/chat/src",
-      "prefix": "chat",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -86,7 +83,10 @@
             "aot": true,
             "assets": ["apps/chat/src/favicon.ico", "apps/chat/src/assets"],
             "styles": ["apps/chat/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["apps/chat/src/scss"]
+            }
           },
           "configurations": {
             "production": {
@@ -140,10 +140,7 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": [
-              "apps/chat/tsconfig.app.json",
-              "apps/chat/tsconfig.spec.json"
-            ],
+            "tsConfig": ["apps/chat/tsconfig.app.json", "apps/chat/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!apps/chat/**/*"]
           }
         },

@@ -1,8 +1,8 @@
 import { Directive, Input, TemplateRef, ViewContainerRef, OnInit } from '@angular/core';
 
 export class NgLetContext {
-  $implicit: any = null;
-  ngLet: any = null;
+  $implicit: unknown = null;
+  ngLet: unknown = null;
 }
 
 @Directive({
@@ -12,7 +12,7 @@ export class NgLetDirective implements OnInit {
   private _context = new NgLetContext();
 
   @Input()
-  set ngLet(value: any) {
+  set ngLet(value: unknown) {
     this._context.$implicit = this._context.ngLet = value;
   }
 

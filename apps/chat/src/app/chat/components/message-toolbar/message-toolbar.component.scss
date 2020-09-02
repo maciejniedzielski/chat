@@ -1,0 +1,11 @@
+.chat-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.message {
+  width: calc(100% - 75px);
+}

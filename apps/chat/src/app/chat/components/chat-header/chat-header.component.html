@@ -1,0 +1,12 @@
+<mat-toolbar>
+  <button
+    *ngIf="isMobile$ | async"
+    mat-icon-button
+    aria-label="menu"
+    class="menu-button"
+    (click)="toggleMenu()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <ng-content></ng-content>
+</mat-toolbar>

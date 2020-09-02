@@ -1,0 +1,8 @@
+<mat-list>
+  <a *ngFor="let user of users" [routerLink]="['direct', user.id]">
+    <mat-list-item>
+      <div class="avatar"></div>
+      {{ user.name }}
+    </mat-list-item>
+  </a>
+</mat-list>
