@@ -2,7 +2,7 @@
   <mat-drawer-container class="container">
     <mat-drawer #drawer [mode]="isMobile ? 'push' : 'side'" [opened]="!isMobile" class="sidebar">
       <app-sidebar-header></app-sidebar-header>
-      <app-users></app-users>
+      <app-users [users]="users$ | async"></app-users>
     </mat-drawer>
     <mat-drawer-content>
       <router-outlet></router-outlet>

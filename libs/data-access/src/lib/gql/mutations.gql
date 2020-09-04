@@ -5,6 +5,13 @@ mutation createUser($name: String!) {
   }
 }
 
+query users {
+  users {
+    id
+    name
+  }
+}
+
 mutation createChannel($name: String!) {
   createChannel(name: $name) {
     id

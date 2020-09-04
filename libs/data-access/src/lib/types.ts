@@ -63,6 +63,17 @@ export type CreateUserMutation = (
   ) }
 );
 
+export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UsersQuery = (
+  { __typename?: 'Query' }
+  & { users?: Maybe<Array<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name'>
+  )>> }
+);
+
 export type CreateChannelMutationVariables = Exact<{
   name: Scalars['String'];
 }>;
@@ -90,6 +101,25 @@ export const CreateUserDocument = gql`
   })
   export class CreateUserGQL extends Apollo.Mutation<CreateUserMutation, CreateUserMutationVariables> {
     document = CreateUserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UsersDocument = gql`
+    query users {
+  users {
+    id
+    name
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UsersGQL extends Apollo.Query<UsersQuery, UsersQueryVariables> {
+    document = UsersDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

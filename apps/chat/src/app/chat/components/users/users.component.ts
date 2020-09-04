@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { User } from '@chat/data-access';
 
 @Component({
   selector: 'app-users',
@@ -7,11 +8,5 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent {
-  users = [
-    {
-      id: 1,
-      username: 'Jane_Doe',
-      name: 'Jane Doe',
-    },
-  ];
+  @Input() users: User[];
 }
