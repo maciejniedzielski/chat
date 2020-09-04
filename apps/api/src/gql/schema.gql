@@ -1,14 +1,21 @@
 # Root types
 type Query {
   users: [User!]
+  channels: [Channel!]
 }
 
 type Mutation {
   createUser(name: String!): User!
+  createChannel(name: String!): Channel!
 }
 
 # Types
 type User {
+  id: ID!
+  name: String!
+}
+
+type Channel {
   id: ID!
   name: String!
 }

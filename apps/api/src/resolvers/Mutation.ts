@@ -3,4 +3,5 @@ import { MutationResolvers } from '@chat/data-access';
 
 export const Mutation: MutationResolvers = {
   createUser: async (parent, { name }) => await prisma.createUser({ name }),
+  createChannel: async (parent, { name }) => await prisma.createChannel({ name }),
 };

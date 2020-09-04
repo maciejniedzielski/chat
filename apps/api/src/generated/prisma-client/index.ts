@@ -16,6 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  channel: (where?: ChannelWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -38,6 +39,25 @@ export interface Prisma {
    * Queries
    */
 
+  channel: (where: ChannelWhereUniqueInput) => ChannelNullablePromise;
+  channels: (args?: {
+    where?: ChannelWhereInput;
+    orderBy?: ChannelOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Channel>;
+  channelsConnection: (args?: {
+    where?: ChannelWhereInput;
+    orderBy?: ChannelOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ChannelConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -63,6 +83,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createChannel: (data: ChannelCreateInput) => ChannelPromise;
+  updateChannel: (args: {
+    data: ChannelUpdateInput;
+    where: ChannelWhereUniqueInput;
+  }) => ChannelPromise;
+  updateManyChannels: (args: {
+    data: ChannelUpdateManyMutationInput;
+    where?: ChannelWhereInput;
+  }) => BatchPayloadPromise;
+  upsertChannel: (args: {
+    where: ChannelWhereUniqueInput;
+    create: ChannelCreateInput;
+    update: ChannelUpdateInput;
+  }) => ChannelPromise;
+  deleteChannel: (where: ChannelWhereUniqueInput) => ChannelPromise;
+  deleteManyChannels: (where?: ChannelWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -88,6 +124,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  channel: (
+    where?: ChannelSubscriptionWhereInput
+  ) => ChannelSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -101,9 +140,53 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type ChannelOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
+
 export type UserOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export type ChannelWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ChannelWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ChannelWhereInput[] | ChannelWhereInput>;
+  OR?: Maybe<ChannelWhereInput[] | ChannelWhereInput>;
+  NOT?: Maybe<ChannelWhereInput[] | ChannelWhereInput>;
+}
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -143,6 +226,19 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
+export interface ChannelCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface ChannelUpdateInput {
+  name?: Maybe<String>;
+}
+
+export interface ChannelUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
@@ -154,6 +250,17 @@ export interface UserUpdateInput {
 
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
+}
+
+export interface ChannelSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ChannelWhereInput>;
+  AND?: Maybe<ChannelSubscriptionWhereInput[] | ChannelSubscriptionWhereInput>;
+  OR?: Maybe<ChannelSubscriptionWhereInput[] | ChannelSubscriptionWhereInput>;
+  NOT?: Maybe<ChannelSubscriptionWhereInput[] | ChannelSubscriptionWhereInput>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -169,6 +276,107 @@ export interface UserSubscriptionWhereInput {
 
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface Channel {
+  id: ID_Output;
+  name: String;
+}
+
+export interface ChannelPromise extends Promise<Channel>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface ChannelSubscription
+  extends Promise<AsyncIterator<Channel>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ChannelNullablePromise
+  extends Promise<Channel | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface ChannelConnection {
+  pageInfo: PageInfo;
+  edges: ChannelEdge[];
+}
+
+export interface ChannelConnectionPromise
+  extends Promise<ChannelConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ChannelEdge>>() => T;
+  aggregate: <T = AggregateChannelPromise>() => T;
+}
+
+export interface ChannelConnectionSubscription
+  extends Promise<AsyncIterator<ChannelConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ChannelEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateChannelSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ChannelEdge {
+  node: Channel;
+  cursor: String;
+}
+
+export interface ChannelEdgePromise extends Promise<ChannelEdge>, Fragmentable {
+  node: <T = ChannelPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ChannelEdgeSubscription
+  extends Promise<AsyncIterator<ChannelEdge>>,
+    Fragmentable {
+  node: <T = ChannelSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateChannel {
+  count: Int;
+}
+
+export interface AggregateChannelPromise
+  extends Promise<AggregateChannel>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateChannelSubscription
+  extends Promise<AsyncIterator<AggregateChannel>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface User {
@@ -214,29 +422,6 @@ export interface UserConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
   aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserEdge {
@@ -286,6 +471,50 @@ export interface BatchPayloadSubscription
   extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface ChannelSubscriptionPayload {
+  mutation: MutationType;
+  node: Channel;
+  updatedFields: String[];
+  previousValues: ChannelPreviousValues;
+}
+
+export interface ChannelSubscriptionPayloadPromise
+  extends Promise<ChannelSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ChannelPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ChannelPreviousValuesPromise>() => T;
+}
+
+export interface ChannelSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ChannelSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ChannelSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ChannelPreviousValuesSubscription>() => T;
+}
+
+export interface ChannelPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface ChannelPreviousValuesPromise
+  extends Promise<ChannelPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface ChannelPreviousValuesSubscription
+  extends Promise<AsyncIterator<ChannelPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -362,6 +591,10 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Channel",
     embedded: false
   }
 ];

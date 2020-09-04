@@ -19,11 +19,13 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   users?: Maybe<Array<User>>;
+  channels?: Maybe<Array<Channel>>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   createUser: User;
+  createChannel: Channel;
 };
 
 
@@ -31,8 +33,19 @@ export type MutationCreateUserArgs = {
   name: Scalars['String'];
 };
 
+
+export type MutationCreateChannelArgs = {
+  name: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type Channel = {
+  __typename?: 'Channel';
   id: Scalars['ID'];
   name: Scalars['String'];
 };
@@ -50,6 +63,19 @@ export type CreateUserMutation = (
   ) }
 );
 
+export type CreateChannelMutationVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+
+export type CreateChannelMutation = (
+  { __typename?: 'Mutation' }
+  & { createChannel: (
+    { __typename?: 'Channel' }
+    & Pick<Channel, 'id' | 'name'>
+  ) }
+);
+
 export const CreateUserDocument = gql`
     mutation createUser($name: String!) {
   createUser(name: $name) {
@@ -64,6 +90,25 @@ export const CreateUserDocument = gql`
   })
   export class CreateUserGQL extends Apollo.Mutation<CreateUserMutation, CreateUserMutationVariables> {
     document = CreateUserDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateChannelDocument = gql`
+    mutation createChannel($name: String!) {
+  createChannel(name: $name) {
+    id
+    name
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateChannelGQL extends Apollo.Mutation<CreateChannelMutation, CreateChannelMutationVariables> {
+    document = CreateChannelDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -152,6 +197,7 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Channel: ResolverTypeWrapper<Channel>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
@@ -162,6 +208,7 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   User: User;
   ID: Scalars['ID'];
+  Channel: Channel;
   Boolean: Scalars['Boolean'];
 };
 
@@ -175,13 +222,21 @@ export type NamedClientDirectiveResolver<Result, Parent, ContextType = any, Args
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>;
+  channels?: Resolver<Maybe<Array<ResolversTypes['Channel']>>, ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'name'>>;
+  createChannel?: Resolver<ResolversTypes['Channel'], ParentType, ContextType, RequireFields<MutationCreateChannelArgs, 'name'>>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
+export type ChannelResolvers<ContextType = any, ParentType extends ResolversParentTypes['Channel'] = ResolversParentTypes['Channel']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
@@ -191,6 +246,7 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  Channel?: ChannelResolvers<ContextType>;
 };
 
 

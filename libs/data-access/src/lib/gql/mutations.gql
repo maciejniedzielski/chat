@@ -4,3 +4,10 @@ mutation createUser($name: String!) {
     name
   }
 }
+
+mutation createChannel($name: String!) {
+  createChannel(name: $name) {
+    id
+    name
+  }
+}

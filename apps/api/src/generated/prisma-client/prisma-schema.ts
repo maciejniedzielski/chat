@@ -2,7 +2,11 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `type AggregateUser {
+export const typeDefs = /* GraphQL */ `type AggregateChannel {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -10,9 +14,112 @@ type BatchPayload {
   count: Long!
 }
 
+type Channel {
+  id: ID!
+  name: String!
+}
+
+type ChannelConnection {
+  pageInfo: PageInfo!
+  edges: [ChannelEdge]!
+  aggregate: AggregateChannel!
+}
+
+input ChannelCreateInput {
+  id: ID
+  name: String!
+}
+
+type ChannelEdge {
+  node: Channel!
+  cursor: String!
+}
+
+enum ChannelOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type ChannelPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type ChannelSubscriptionPayload {
+  mutation: MutationType!
+  node: Channel
+  updatedFields: [String!]
+  previousValues: ChannelPreviousValues
+}
+
+input ChannelSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ChannelWhereInput
+  AND: [ChannelSubscriptionWhereInput!]
+  OR: [ChannelSubscriptionWhereInput!]
+  NOT: [ChannelSubscriptionWhereInput!]
+}
+
+input ChannelUpdateInput {
+  name: String
+}
+
+input ChannelUpdateManyMutationInput {
+  name: String
+}
+
+input ChannelWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [ChannelWhereInput!]
+  OR: [ChannelWhereInput!]
+  NOT: [ChannelWhereInput!]
+}
+
+input ChannelWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
+  createChannel(data: ChannelCreateInput!): Channel!
+  updateChannel(data: ChannelUpdateInput!, where: ChannelWhereUniqueInput!): Channel
+  updateManyChannels(data: ChannelUpdateManyMutationInput!, where: ChannelWhereInput): BatchPayload!
+  upsertChannel(where: ChannelWhereUniqueInput!, create: ChannelCreateInput!, update: ChannelUpdateInput!): Channel!
+  deleteChannel(where: ChannelWhereUniqueInput!): Channel
+  deleteManyChannels(where: ChannelWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -39,6 +146,9 @@ type PageInfo {
 }
 
 type Query {
+  channel(where: ChannelWhereUniqueInput!): Channel
+  channels(where: ChannelWhereInput, orderBy: ChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Channel]!
+  channelsConnection(where: ChannelWhereInput, orderBy: ChannelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChannelConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -46,6 +156,7 @@ type Query {
 }
 
 type Subscription {
+  channel(where: ChannelSubscriptionWhereInput): ChannelSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
