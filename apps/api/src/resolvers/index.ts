@@ -1,11 +1,9 @@
-import { resolve } from 'url';
-import { checkForResolveTypeResolver } from 'apollo-server';
-
 import { Query } from './Query';
 import { Mutation } from './Mutation';
-import { Resolvers } from '@chat/data-access';
+import { Message } from './Message';
 
-export const resolvers: Resolvers = {
+export const resolvers = {
   Query,
   Mutation,
+  Message,
 };

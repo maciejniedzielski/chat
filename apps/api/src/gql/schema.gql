@@ -2,20 +2,37 @@
 type Query {
   users: [User!]
   channels: [Channel!]
+  messages(channel: ID!): [Message!]
 }
 
 type Mutation {
   createUser(name: String!): User!
   createChannel(name: String!): Channel!
+  createMessage(message: String!, channel: ID!): Message!
 }
 
 # Types
 type User {
   id: ID!
+  token: String
   name: String!
+  createdAt: String!
+  updatedAt: String
 }
 
 type Channel {
   id: ID!
   name: String!
+  messages: [Message!]
+  createdAt: String!
+  updatedAt: String
+}
+
+type Message {
+  id: ID!
+  message: String!
+  author: User!
+  channel: Channel!
+  createdAt: String!
+  updatedAt: String
 }
